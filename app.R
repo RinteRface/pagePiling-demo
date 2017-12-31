@@ -6,7 +6,7 @@ options <- list(
 )
 
 ui <- pagePiling(
-  sections.color = c('#f2f2f2', '#2C3E50', '#39C'),
+  sections.color = c('#8DD3C7', '#FFFFB3', '#BEBADA', '#FB8072', '#80B1D3'),
   opts = options,
   menu = c("Pills" = "section1",
            "Utils" = "section2",
@@ -71,17 +71,17 @@ ui <- pagePiling(
 server <- function(input, output){
   
   output$plot <- renderPlot({
-    par(bg = "grey60")
+    par(bg = "#BEBADA")
     plot(mtcars$wt, mtcars$mpg)
   })
   
   output$plot2 <- renderPlot({
-    par(bg = "grey80")
+    par(bg = "#FB8072")
     hist(rnorm(input$bins, 100, 250))
   })
   
   output$somePlot <- renderPlot({
-    par(bg = "#2C3E50")
+    par(bg = "#FFFFB3")
     plot(mtcars$qsec, mtcars$drat)
   })
 }
