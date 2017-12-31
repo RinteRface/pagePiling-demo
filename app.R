@@ -8,20 +8,31 @@ options <- list(
 ui <- pagePiling(
   sections.color = c('#f2f2f2', '#2C3E50', '#39C'),
   opts = options,
-  menu = c("Section 1" = "section1",
-           "Piling" = "section2",
+  menu = c("Pills" = "section1",
+           "Utils" = "section2",
            "Plots" = "section3",
            "Layers" = "section4",
            "More" = "more"),
   pageSection(
     center = TRUE,
     menu = "section1",
-    h1("pagePiling.js for Shiny.")
+    h1("pagePiling.js meets Shiny.")
   ),
   pageSection(
     menu = "section2",
     center = TRUE,
-    h1("Section 2")
+    pageContainer(
+      h2("Grid system"),
+      pageRow(
+        pageColumn(
+          h3("Buttons"),
+          pageButtonDown("Move section down")
+        ),
+        pageColumn(
+          plotOutput("somePlot")
+        )
+      )
+    )
   ),
   pageSectionPlot(
     "plot",
@@ -48,13 +59,12 @@ ui <- pagePiling(
   pageSection(
     menu = "more",
     center = TRUE,
-    h1("More stuff like that for shiny"),
+    h1("Want more stuff like that for shiny?"),
     pageButton(
       "More",
       outline = TRUE,
       href = "http://john-coene.com"
-    ),
-    p("This runs fine... the issue is with Shiny showcase mode.")
+    )
   )
 )
 
@@ -68,6 +78,11 @@ server <- function(input, output){
   output$plot2 <- renderPlot({
     par(bg = "grey80")
     hist(rnorm(input$bins, 100, 250))
+  })
+  
+  output$somePlot <- renderPlot({
+    par(bg = "#2C3E50")
+    plot(mtcars$qsec, mtcars$drat)
   })
 }
 
