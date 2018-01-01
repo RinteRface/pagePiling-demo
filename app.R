@@ -1,90 +1,87 @@
 library(fullPage)
 library(shiny)
 
-options <- list(
-  loopBottom = TRUE
-)
-
 ui <- pagePiling(
-  sections.color = c('#8DD3C7', '#FFFFB3', '#BEBADA', '#FB8072', '#80B1D3'),
-  opts = options,
-  menu = c("Pills" = "section1",
-           "Utils" = "section2",
-           "Plots" = "section3",
-           "Layers" = "section4",
-           "More" = "more"),
-  pageSection(
-    center = TRUE,
-    menu = "section1",
-    h1("pagePiling.js meets Shiny.")
+  center = TRUE,
+  sections.color = c(
+    "#4B97D2",
+    "#FFE6F4",
+    "#FFBDE1",
+    "#AEFFAC",
+    "#C490F4",
+    "#4B97D2"
+  ),
+  pageTheme("gray"),
+  menu = c(
+    "Piling" = "intro",
+    "Grid" = "grid",
+    "Backgrounds" = "backgrounds",
+    "Themes" = "themes",
+    "Buttons" = "buttons",
+    "sisters" = "sisters"
   ),
   pageSection(
-    menu = "section2",
-    center = TRUE,
-    pageContainer(
-      h2("Grid system"),
-      pageRow(
-        pageColumn(
-          h3("Buttons"),
-          pageButtonDown("Move section down")
-        ),
-        pageColumn(
-          plotOutput("somePlot")
-        )
+    menu = "intro",
+    h1("pagePiling.js meets Shiny!", style = "color:#f3f3f3;")
+  ),
+  pageSection(
+    menu = "grid",
+    h1("Grid"),
+    pageRow(
+      pageColumn(
+        h2("Columns")
+      ),
+      pageColumn(
+        plotOutput("plot1")
       )
     )
-  ),
-  pageSectionPlot(
-    "plot",
-    center = TRUE,
-    menu = "section3",
-    h1("Plot background")
   ),
   pageSectionPlot(
     "plot2",
-    center = TRUE,
-    menu = "section4",
-    pageContainer(
-      h1("Layer anything"),
-      sliderInput(
-        "bins",
-        "Data Points",
-        min = 100,
-        max = 500,
-        step = 25,
-        value = 200
-      )
-    )
+    h1("Background Plot")
   ),
   pageSection(
-    menu = "more",
-    center = TRUE,
-    h1("Want more stuff like that for shiny?"),
-    pageButton(
-      "More",
-      outline = TRUE,
-      href = "http://john-coene.com"
-    )
+    menu = "themes",
+    h1("16 themes"),
+    verbatimTextOutput("themes")
+  ),
+  pageSection(
+    h1("Buttons"),
+    pageButtonDown("Next Section")
+  ),
+  fullSection(
+    menu = "sisters",
+    h1("Sister functions"),
+    verbatimTextOutput("sisters")
   )
 )
 
 server <- function(input, output){
   
-  output$plot <- renderPlot({
-    par(bg = "#BEBADA")
+  output$plot1 <- renderPlot({
+    par(bg = "#FFE6F4")
     plot(mtcars$wt, mtcars$mpg)
   })
   
   output$plot2 <- renderPlot({
-    par(bg = "#FB8072")
-    hist(rnorm(input$bins, 100, 250))
+    par(bg = "#FFBDE1")
+    hist(rnorm(100, mean = 25, sd = 5))
   })
   
-  output$somePlot <- renderPlot({
-    par(bg = "#FFFFB3")
-    plot(mtcars$qsec, mtcars$drat)
+  output$plot3 <- renderPlot({
+    par(bg = "#FFADB2")
+    plot(1:nrow(mtcars), mtcars$drat, type = "l")
+  })
+  
+  output$sisters <- renderText({
+    '# See those
+    demo("fullPage", package = "fullPage")
+    demo("multiPage", package = "fullPage")'
+  })
+  
+  output$themes <- renderText({
+    'pageTheme()'
   })
 }
 
 shinyApp(ui, server)
-
