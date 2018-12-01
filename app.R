@@ -4,7 +4,7 @@ library(shiny)
 ui <- pagePiling(
   center = TRUE,
   sections.color = c(
-    "#4B97D2",
+    "#f3f3f3",
     "#FFE6F4",
     "#FFBDE1",
     "#FFBDE1",
@@ -24,7 +24,20 @@ ui <- pagePiling(
   ),
   pageSection(
     menu = "intro",
-    h1("pagePiling.js meets Shiny!", style = "color:#f3f3f3;")
+    h1("pagePiling.js meets Shiny!"),
+    br(),
+    img(
+      src = "http://rinterface.com/inst/images/fullPage.svg",
+      height = "200px"
+    ),
+    br(),
+    p(
+      "Source code",
+      tags$a(
+        "here", 
+        href = "https://github.com/RinteRface/pagePiling-demo"
+      )
+    )
   ),
   pageSection(
     menu = "grid",
